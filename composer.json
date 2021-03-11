@@ -1,0 +1,17 @@
+{
+    "name": "darya/package-geoip",
+    "authors": [
+        {
+            "name": "zakaulovaaa",
+            "email": "darya.zakaulova@yandex.ru"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "GeoIp\\": "GeoIp/"
+        }
+    },
+}
