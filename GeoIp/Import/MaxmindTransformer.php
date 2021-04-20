@@ -68,7 +68,13 @@ class MaxmindTransformer implements DataSource {
         try {
 //            $this->downloadData();
 //            $this->unzipData();
-            $this->uploadCSV("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
+            try {
+                $this->uploadCSV("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
+            } catch (\Exception $e) {
+                var_dump("DASHAAA hello ");
+            }
+
+//            $this->uploadCSV("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
         } catch (\Exception $e) {
             echo $e;
             return false;
@@ -77,6 +83,7 @@ class MaxmindTransformer implements DataSource {
     }
 
     function uploadCSV($csvFile = '', $tableData = [], $filters = [], $reference = []) {
+        set_time_limit(5);
         $file = fopen($csvFile, 'r');
 
         $i = 0;
@@ -88,23 +95,20 @@ class MaxmindTransformer implements DataSource {
                 $keys = $data;
             } else {
                 $rowData = array_combine($keys, $data);
+                foreach ($reference as $ref) {
+                    $refData = call_user_func($ref['fn'][0], $rowData[$ref['fn'][1]]);
 
-//                if (self::filterRow($rowData, $filters)) {
-                    foreach ($reference as $ref) {
-                        $refData = call_user_func($ref['fn'][0], $rowData[$ref['fn'][1]]);
-
-                        if (!empty($refData)) {
-                            if (is_array($refData)) {
-                                foreach ($refData as $refKey => $refVal) {
-                                    $rowData[$ref['r'][$refKey]] = $refVal;
-                                }
-                            } else {
-                                $rowData[$ref['r']] = $refData;
+                    if (!empty($refData)) {
+                        if (is_array($refData)) {
+                            foreach ($refData as $refKey => $refVal) {
+                                $rowData[$ref['r'][$refKey]] = $refVal;
                             }
+                        } else {
+                            $rowData[$ref['r']] = $refData;
                         }
                     }
+                }
                 $allData[] = $rowData;
-//                }
             }
             $i++;
         }
