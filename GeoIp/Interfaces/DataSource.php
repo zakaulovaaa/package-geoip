@@ -6,9 +6,15 @@ interface DataSource {
     /**
      * @return bool  //true -- если в результате получения данных ошибок не возникло, иначе -- false
      */
-    function initializationDataSource(): bool;
+    public function downloadDataSource(): bool;
 
-    // initializationDataSource ПЕРЕИМЕНОВАТЬ
+    /**
+     * @param int $numPage
+     * @param int $step
+     * @return array
+     */
+    public function getPieceOfData(int $numPage, int $step): array;
+
 
     /**
      * @return mixed

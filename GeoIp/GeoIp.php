@@ -29,9 +29,7 @@ class GeoIp {
     }
 
     public function dataInitialization() {
-
-        var_dump($this->dataSource->initializationDataSource());
-
+        var_dump($this->dataSource->downloadDataSource());
     }
 
 

@@ -7,7 +7,10 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+      "ext-curl": "*",
+      "ext-zip": "*",
+        "ext-http": "*"
     },
     "autoload": {
         "psr-4": {

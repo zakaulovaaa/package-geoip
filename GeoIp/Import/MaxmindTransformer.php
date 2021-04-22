@@ -8,10 +8,11 @@ use http\Exception;
 use \ZipArchive;
 use http\Client\Curl;
 
+
 class MaxmindTransformer implements DataSource {
 
-    const ARCHIVE_NAME = "/db.zip";
-    const FOLDER_PARSE_NAME = "GeoLite2-City";
+    private const ARCHIVE_NAME = "/db.zip";
+    private const FOLDER_PARSE_NAME = "GeoLite2-City";
 
     protected string $url;
     private string $folderParseName;
@@ -33,7 +34,7 @@ class MaxmindTransformer implements DataSource {
             $zip->extractTo($this->temporaryDir);
             $zip->close();
         } else {
-            throw new \Exception("failed to open archive<br>");
+            throw new \RuntimeException("failed to open archive<br>");
         }
     }
 
@@ -42,10 +43,12 @@ class MaxmindTransformer implements DataSource {
         if ($this->url === "") {
             throw new \Exception("no link to download the database");
         }
+
         // create temporary dir
         if (!file_exists($this->temporaryDir)) {
             mkdir($this->temporaryDir, 0777, true);
         }
+
         //download data
         $file = fopen($this->temporaryDir . self::ARCHIVE_NAME, 'w');
         $ch = \curl_init();
@@ -57,24 +60,25 @@ class MaxmindTransformer implements DataSource {
         curl_exec($ch);
         curl_close($ch);
         fclose($file);
+
         //check is empty archive
         if (!filesize($this->temporaryDir . self::ARCHIVE_NAME)) {
             throw new \Exception("the archive was not downloaded");
         }
     }
 
-    function initializationDataSource(): bool
+    function downloadDataSource(): bool
     {
         try {
 //            $this->downloadData();
 //            $this->unzipData();
             try {
-                $this->uploadCSV("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
+//                $this->uploadCSV("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
+                $this->getInfoData("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
             } catch (\Exception $e) {
                 var_dump("DASHAAA hello ");
             }
 
-//            $this->uploadCSV("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
         } catch (\Exception $e) {
             echo $e;
             return false;
@@ -82,8 +86,9 @@ class MaxmindTransformer implements DataSource {
         return true;
     }
 
+
+
     function uploadCSV($csvFile = '', $tableData = [], $filters = [], $reference = []) {
-        set_time_limit(5);
         $file = fopen($csvFile, 'r');
 
         $i = 0;
@@ -116,15 +121,30 @@ class MaxmindTransformer implements DataSource {
         $m = memory_get_usage() - $m;
 
         fclose($file);
-        echo "<pre>";
-        echo $m . "<br>";
-        var_dump(count($allData));
-        var_dump($i);
-        echo "</pre>";
-
+//        echo "<pre>";
+//        echo $m . "<br>";
+//        var_dump(count($allData));
+//        var_dump($i);
+//        echo "</pre>";
     }
-    function getInfoIp() {
 
+    function getInfoData($csvFile = '') {
+        $file = fopen($csvFile, 'r');
+
+        $i = 0;
+        $keys = [];
+
+        while (($data = fgetcsv($file)) !== false) {
+            if ($i === 0) {
+                $keys = $data;
+                break;
+            }
+        }
+        fclose($file);
+
+        return [
+            "size" => count($keys)
+        ];
     }
 
     function updateDataBase()
@@ -138,4 +158,9 @@ class MaxmindTransformer implements DataSource {
     // TODO: Установить соответстивия между: IPv4 -- файлы из архива
     // TODO: Установить соответстивия между: IPv6 -- файлы из архива
     // TODO: Установить соответстивия между: location -- файл из архива
+    public function getPieceOfData(int $numPage, int $step): array
+    {
+        // TODO: Implement getPieceOfData() method.
+        return [];
+    }
 }

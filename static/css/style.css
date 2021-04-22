@@ -4,103 +4,134 @@
     bottom: 0;
     left: 0;
     right: 0;
-    /*background-color: green;*/
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: black;
 }
 
 .preloader {
-    width: 100px;
-    height: 100px;
-    /*background-color: white;*/
+    width: 290px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: inherit;
+    /*background-color: #1049a9;*/
 }
 
 .dot {
-    height: 15px;
-    width: 15px;
-    background-color: black;
-    border-radius: 15px;
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border-radius: 50%;
+    position: inherit;
+    left: 85px;
 }
 
 .dot_1 {
-    -webkit-animation: dot-dot-dot-1 5s linear infinite;
-    animation: dot-dot-dot-1 5s linear infinite;
+    -webkit-animation: dot-dot-dot-1 1.5s linear infinite;
+    animation: dot-dot-dot-1 1.5s linear infinite;
+    background-color: white;
 }
 
 .dot_2 {
-    -webkit-animation: dot-dot-dot-2 2s linear infinite;
-    animation: dot-dot-dot-2 2s linear infinite;
+    -webkit-animation: dot-dot-dot-2 1.5s linear infinite;
+    animation: dot-dot-dot-2 1.5s linear infinite;
+    background-color: rgb(180, 180, 180);
 }
 
-.preloader .dot:nth-child(2) {
-    animation-delay: .10s;
-}
-
-.preloader .dot:nth-child(3) {
-    animation-delay: .10s;
+.dot_3 {
+    -webkit-animation: dot-dot-dot-3 1.5s linear infinite;
+    animation: dot-dot-dot-3 1.5s linear infinite;
+    background-color: rgb(100, 100, 100);
 }
 
 @keyframes dot-dot-dot-1 {
     0% {
-        -webkit-transform: translate(0, 0);
-        -ms-transform: translate(0, 0);
-        transform: translate(0, 0);
+        transform: translate(-85px, 0px);
     }
-    25% {
-        -webkit-transform: translate(0, 85px);
-        -ms-transform: translate(0, 85px);
-        transform: translate(0, 85px);
+    10% {
+        transform: translate(-85px, 0px);
     }
-
+    20% {
+        transform: translate(-85px, -50px);
+    }
     50% {
-        -webkit-transform: translate(85px, 85px);
-        -ms-transform: translate(85px, 85px);
-        transform: translate(85px, 85px);
+        transform: translate(-85px, -50px);
     }
-
-    75% {
-        -webkit-transform: translate(85px, 0);
-        -ms-transform: translate(85px, 0);
-        transform: translate(85px, 0);
+    60% {
+        transform: translate(-85px, 0px);
+    }
+    85% {
+        transform: translate(-85px, 0px);
+    }
+    85% {
+        transform: rotate(0deg)
+        translate(-85px)
+        rotate(0deg);
+        background-color: white;
     }
     100% {
-        -webkit-transform: translate(0, 0);
-        -ms-transform: translate(0, 0);
-        transform: translate(0, 0);
+        transform: rotate(180deg)
+        translate(-85px)
+        rotate(-180deg);
+        background-color: rgb(100, 100, 100);
     }
 }
 
-
 @keyframes dot-dot-dot-2 {
+
     0% {
-        -webkit-transform: translate(85px, 70px);
-        -ms-transform: translate(85px, 70px);
-        transform: translate(85px, 70px);
-
+        transform: translate(0px, 0px);
     }
-    25% {
-        -webkit-transform: translate(85px, -15px);
-        -ms-transform: translate(85px, -15px);
-        transform: translate(85px, -15px);
-
+    20% {
+        transform: translate(0px, 0px);
     }
-
-    50% {
-        -webkit-transform: translate(0, -15px);
-        -ms-transform: translate(0, -15px);
-        transform: translate(0, -15px);
+    30% {
+        transform: translate(0px, -50px);
     }
-
-    75% {
-        -webkit-transform: translate(0, 70px);
-        -ms-transform: translate(0, 70px);
-        transform: translate(0, 70px);
+    60% {
+        transform: translate(0px, -50px);
+    }
+    70% {
+        transform: translate(0px, 0px);
     }
     100% {
-        -webkit-transform: translate(85px, 70px);
-        -ms-transform: translate(85px, 70px);
-        transform: translate(85px, 70px);
+        transform: translate(0px, 0px);
+    }
+}
+
+@keyframes dot-dot-dot-3 {
+    0% {
+        transform: translate(85px, 0px);
+    }
+    30% {
+        transform: translate(85px, 0px);
+    }
+    40% {
+        transform: translate(85px, -50px);
+    }
+    70% {
+        transform: translate(85px, -50px);
+    }
+    80% {
+        transform: translate(85px, 0px);
+    }
+    85% {
+        transform: translate(-85px, 0px);
+    }
+    85% {
+        transform: rotate(0deg)
+        translate(85px)
+        rotate(0deg);
+        background-color: rgb(100, 100, 100);
+    }
+    100% {
+        transform: rotate(180deg)
+        translate(85px)
+        rotate(-180deg);
+        background-color: white;
     }
 }
 
