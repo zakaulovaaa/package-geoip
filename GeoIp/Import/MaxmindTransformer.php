@@ -67,14 +67,14 @@ class MaxmindTransformer implements DataSource {
         }
     }
 
-    function downloadDataSource(): bool
+    function downloadDataSource(): mixed
     {
         try {
 //            $this->downloadData();
 //            $this->unzipData();
             try {
 //                $this->uploadCSV("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
-                $this->getInfoData("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
+                return $this->getInfoData("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Locations-ru.csv");
             } catch (\Exception $e) {
                 var_dump("DASHAAA hello ");
             }
@@ -129,21 +129,11 @@ class MaxmindTransformer implements DataSource {
     }
 
     function getInfoData($csvFile = '') {
-        $file = fopen($csvFile, 'r');
-
-        $i = 0;
-        $keys = [];
-
-        while (($data = fgetcsv($file)) !== false) {
-            if ($i === 0) {
-                $keys = $data;
-                break;
-            }
-        }
-        fclose($file);
+        $file = file($csvFile);
+        $cnt = count($file);
 
         return [
-            "size" => count($keys)
+            "size" => $cnt
         ];
     }
 
@@ -152,15 +142,17 @@ class MaxmindTransformer implements DataSource {
         // TODO: Implement updateDataBase() method.
     }
 
+    public function getPieceOfData(int $numPage, int $step): array
+    {
+
+        return [];
+    }
+
 
 
     // TODO: добавить функцию получения структуры данных из файликов
     // TODO: Установить соответстивия между: IPv4 -- файлы из архива
     // TODO: Установить соответстивия между: IPv6 -- файлы из архива
     // TODO: Установить соответстивия между: location -- файл из архива
-    public function getPieceOfData(int $numPage, int $step): array
-    {
-        // TODO: Implement getPieceOfData() method.
-        return [];
-    }
+
 }

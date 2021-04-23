@@ -28,10 +28,13 @@ class GeoIp {
         $this->dataSource = $dataSource;
     }
 
-    public function dataInitialization() {
-        var_dump($this->dataSource->downloadDataSource());
+    public function downloadDataSource() {
+        return $this->dataSource->downloadDataSource();
     }
 
+    public function getPieceOfData(int $numPage = 1, int $step = 10000) {
+        return $this->dataSource->getPieceOfData($numPage, $step);
+    }
 
 
 

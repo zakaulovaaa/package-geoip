@@ -6,7 +6,7 @@ interface DataSource {
     /**
      * @return bool  //true -- если в результате получения данных ошибок не возникло, иначе -- false
      */
-    public function downloadDataSource(): bool;
+    public function downloadDataSource(): mixed;
 
     /**
      * @param int $numPage

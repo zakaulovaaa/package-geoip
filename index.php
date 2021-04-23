@@ -5,13 +5,34 @@ require_once "vendor/autoload.php";
 use GeoIp\GeoIp;
 use GeoIp\Import\MaxmindTransformer;
 
+//$list = list_files("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/");
+
 
 ?>
-<form id="initialForm">
-    <input type="text" name="url" value="hello">
-    <button id="submitForm">вперед</button>
-</form>
+<!--<form id="initialForm">-->
+<!--    <input type="text" name="url" value="hello">-->
+<!--    <button id="submitForm">вперед</button>-->
+<!--</form>-->
+<!---->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!---->
+<!--<div class="infoCity" id="blockInfoCity">-->
+<!--    <h2 id="infoCityTitle">Всего найдено </h2>-->
+<!--    <form id="infoCity">-->
+<!--        <label>обрабатывать по </label>-->
+<!--        <input name="stepCount" type="number">-->
+<!--        <input name="numPage" type="number" value="1" class="hidden">-->
+<!--        <input name="type" type="text" value="city" class="hidden">-->
+<!--        <button id="submitFormInfoCity">работать</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+
 <?php
+
+
 
 //$ch = curl_init();
 
@@ -49,5 +70,6 @@ use GeoIp\Import\MaxmindTransformer;
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!--<script src="dist/js/jquery.preloadinator.min.js"></script>-->
-<script src="static/js/script.js"></script>
 <script src="static/js/GeoIp.js"></script>
+<script src="static/js/script.js"></script>
+

@@ -24,9 +24,23 @@ function getBodyPostRequest()
 
 $bodyRequest = getBodyPostRequest();
 
-
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-echo json_encode($bodyRequest);
+$dataSource = new MaxmindTransformer($bodyRequest["url"] ?? "");
+$a = new GeoIp($dataSource);
+
+if (isset($bodyRequest["type"])) {
+
+    echo json_encode($bodyRequest);
+} else {
+    $ans = $a->downloadDataSource();
+    echo json_encode($ans);
+}
+
+
+
+
+
+
 
