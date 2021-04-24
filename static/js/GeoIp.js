@@ -1,12 +1,16 @@
-function visibleFormCity() {
-    let block = document.getElementById("blockInfoCity");
+function visibleDetailMaxmind() {
+    let block = document.getElementById("block-maxmind-detail");
     block.classList.remove("hidden")
 }
 
-function setTitleFormCity(num) {
+function setTitleForm(num, idName) {
     let numFormat = new Intl.NumberFormat('ru-RU').format(num);
-    let title = document.getElementById("infoCityTitle");
+    let title = document.getElementById(idName);
     title.innerHTML = "В файле " + numFormat + " строк";
+}
+
+function setNumPage(num, id) {
+
 }
 
 class GeoIp {
@@ -24,15 +28,15 @@ class GeoIp {
                 alert("ERROR")
             },
             success: function (ans) {
-                setTitleFormCity(ans["size"]);
-                visibleFormCity();
+                setTitleForm(ans["city"]["size"], "infoCityTitle");
+                setTitleForm(ans["ip"]["size"], "infoIpTitle");
+                visibleDetailMaxmind();
                 console.log(ans);
             }
         });
     }
 
     batchLoad(data) {
-        console.log(data);
         $.ajax({
             url: this.urlAjax,
             method: 'post',
@@ -42,6 +46,9 @@ class GeoIp {
                 alert("ERROR")
             },
             success: function (ans) {
+                if (ans["info"]["nextPage"] !== -1) {
+
+                }
                 console.log(ans);
             }
         });

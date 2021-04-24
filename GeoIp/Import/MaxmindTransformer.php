@@ -74,7 +74,16 @@ class MaxmindTransformer implements DataSource {
 //            $this->unzipData();
             try {
 //                $this->uploadCSV("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv");
-                return $this->getInfoData("/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Locations-ru.csv");
+
+                $fileCity = "/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Locations-ru.csv";
+                $fileIp = "/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv";
+                return [
+                    "city" => $this->getInfoData($fileCity),
+                    "ip" => [
+                        'size' => -10
+                    ]
+//                        $this->getInfoData($fileIp)
+                ];
             } catch (\Exception $e) {
                 var_dump("DASHAAA hello ");
             }
@@ -131,7 +140,6 @@ class MaxmindTransformer implements DataSource {
     function getInfoData($csvFile = '') {
         $file = file($csvFile);
         $cnt = count($file);
-
         return [
             "size" => $cnt
         ];
@@ -142,10 +150,59 @@ class MaxmindTransformer implements DataSource {
         // TODO: Implement updateDataBase() method.
     }
 
-    public function getPieceOfData(int $numPage, int $step): array
-    {
 
-        return [];
+    function uploadPieceOfDataCSV($csvFile = '', $sizeFile, int $left, int $right): array {
+        $allData = [];
+
+        $fileCSV = fopen($csvFile, 'r');
+        $keys = fgetcsv($fileCSV);
+
+//        for ($i = 1; $i <= min(($numPage - 1) * $step + 1, $sizeFile); $i++) {
+//            fgets($fileCSV);
+//        }
+        for ($i = 1; $i <= $left; $i++) {
+            fgets($fileCSV);
+        }
+//min($numPage * $step, $sizeFile)
+        for ($i = $left + 1; $i <= $right; $i++) {
+            $row = fgetcsv($fileCSV);
+            $rowData = array_combine($keys, $row);
+//            if ($i === $left + 1 || $i === $right - 1) {
+                $allData[] = $rowData;
+//            }
+        }
+
+        return $allData;
+    }
+
+    public function getPieceOfData(int $numPage, int $step, string $type): array
+    {
+        $fileCSV = "";
+        if ($type === "city") {
+            $fileCSV = "/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Locations-ru.csv";
+        } elseif ($type === "ip") {
+            $fileCSV = "/home/zakaulovaaa.ru/domain/main/test/temporary-geoip/GeoLite2-City-CSV_20210309/GeoLite2-City-Blocks-IPv4.csv";
+        }
+
+        $info = $this->getInfoData($fileCSV);
+        $left = ($numPage - 1) * $step + 1;
+        $right = min($step * $numPage, $info["size"]);
+        if ($left >= $info["size"]) {
+            return [];
+        }
+        $nextPage = $numPage + 1;
+
+        if ($info["size"] <= $step * $numPage) {
+            $nextPage = -1;
+        }
+        $data = $this->uploadPieceOfDataCSV($fileCSV, $info["size"], $left, $right);
+
+        return [
+            "data" => $data,
+            "info" => [
+                "nextPage" => $nextPage
+            ]
+        ];
     }
 
 

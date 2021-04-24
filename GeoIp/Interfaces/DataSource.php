@@ -13,7 +13,7 @@ interface DataSource {
      * @param int $step
      * @return array
      */
-    public function getPieceOfData(int $numPage, int $step): array;
+    public function getPieceOfData(int $numPage, int $step, string $type): array;
 
 
     /**

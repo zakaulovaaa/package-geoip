@@ -9,30 +9,41 @@ use GeoIp\Import\MaxmindTransformer;
 
 
 ?>
-<!--<form id="initialForm">-->
-<!--    <input type="text" name="url" value="hello">-->
-<!--    <button id="submitForm">вперед</button>-->
-<!--</form>-->
-<!---->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!---->
-<!--<div class="infoCity" id="blockInfoCity">-->
-<!--    <h2 id="infoCityTitle">Всего найдено </h2>-->
-<!--    <form id="infoCity">-->
-<!--        <label>обрабатывать по </label>-->
-<!--        <input name="stepCount" type="number">-->
-<!--        <input name="numPage" type="number" value="1" class="hidden">-->
-<!--        <input name="type" type="text" value="city" class="hidden">-->
-<!--        <button id="submitFormInfoCity">работать</button>-->
-<!--    </form>-->
-<!--</div>-->
+<form id="initialForm">
+    <input type="text" name="url" value="hello">
+    <button id="submitForm">вперед</button>
+</form>
+
+<div class="block-maxmind-detail hidden" id="block-maxmind-detail">
+    <div class="infoCity" id="blockInfoCity">
+        <h2>City</h2>
+        <h3 id="infoCityTitle">Всего найдено </h3>
+        <form id="infoCity">
+            <label>обрабатывать по </label>
+            <input name="stepCount" type="number">
+            <input name="numPage" type="number" value="1" class="hidden">
+            <input name="type" type="text" value="city" class="hidden">
+            <button id="submitFormInfoCity">работать</button>
+        </form>
+    </div>
+
+    <div class="infoIp" id="blockInfoIp">
+        <h2>IP</h2>
+        <h3 id="infoIpTitle">Всего найдено </h3>
+        <form id="infoIp">
+            <label>обрабатывать по </label>
+            <input name="stepCount" type="number">
+            <input name="numPage" type="number" value="1" class="hidden">
+            <input name="type" type="text" value="city" class="hidden">
+            <button id="submitFormInfoIp">работать</button>
+        </form>
+    </div>
+</div>
+
+
 
 
 <?php
-
-
 
 //$ch = curl_init();
 

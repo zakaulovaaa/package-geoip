@@ -32,8 +32,8 @@ class GeoIp {
         return $this->dataSource->downloadDataSource();
     }
 
-    public function getPieceOfData(int $numPage = 1, int $step = 10000) {
-        return $this->dataSource->getPieceOfData($numPage, $step);
+    public function getPieceOfData(int $numPage = 1, int $step = 10000, string $type) {
+        return $this->dataSource->getPieceOfData($numPage, $step, $type);
     }
 
 

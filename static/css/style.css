@@ -136,5 +136,10 @@
 }
 
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+.block-maxmind-detail {
+    display: flex;
+    justify-content: space-around;
 }

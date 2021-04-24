@@ -30,9 +30,11 @@ header('Access-Control-Allow-Origin: *');
 $dataSource = new MaxmindTransformer($bodyRequest["url"] ?? "");
 $a = new GeoIp($dataSource);
 
-if (isset($bodyRequest["type"])) {
+if (isset($bodyRequest["type"]) && $bodyRequest["type"] === "city") {
+    $data = $a->getPieceOfData($bodyRequest["numPage"], $bodyRequest["stepCount"], $bodyRequest["type"]);
 
-    echo json_encode($bodyRequest);
+    echo json_encode($data);
+
 } else {
     $ans = $a->downloadDataSource();
     echo json_encode($ans);
