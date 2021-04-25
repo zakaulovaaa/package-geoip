@@ -20,8 +20,7 @@ const btnFormCity = document.getElementById("submitFormInfoCity");
 
 btnFormCity.onclick = (event) => {
     event.preventDefault();
-    let form = $("#infoCity").serialize();
-    geoIp.batchLoad(form);
+    geoIp.batchLoad();
     // let geoIp = new GeoIp();
     // console.log(form);
     // geoIp.initialRequest(form);

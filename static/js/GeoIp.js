@@ -9,8 +9,15 @@ function setTitleForm(num, idName) {
     title.innerHTML = "В файле " + numFormat + " строк";
 }
 
-function setNumPage(num, id) {
+function setNumPage(num, idForm) {
+    let form = $("#" + idForm);
+    let input = form.find("[name='numPage']");
+    input.val(num);
+}
 
+function getFDByIdForm(idForm) {
+    let str = $("#infoCity").serialize();
+    return str;
 }
 
 class GeoIp {
@@ -36,22 +43,33 @@ class GeoIp {
         });
     }
 
-    batchLoad(data) {
-        $.ajax({
-            url: this.urlAjax,
-            method: 'post',
-            dataType: 'json',
-            data: data,
-            error: function (ans) {
-                alert("ERROR")
-            },
-            success: function (ans) {
-                if (ans["info"]["nextPage"] !== -1) {
+     batchLoad() {
+        let page = 1, cnt = 1;
+        let that = this;
 
+        while (page !== -1 && cnt < 7) {
+            let data = getFDByIdForm("infoCity");
+            cnt++;
+            $.ajax({
+                url: that.urlAjax,
+                method: 'post',
+                dataType: 'json',
+                data: data,
+                async: false,
+                error: function (ans) {
+                    alert("ERROR")
+                },
+                success: function (ans) {
+                    if (ans["info"]["nextPage"] !== -1) {
+                        setNumPage(ans["info"]["nextPage"], "infoCity");
+                    }
+                    page = ans["info"]["nextPage"];
+                    console.log(ans)
                 }
-                console.log(ans);
-            }
-        });
+            });
+            console.log(page);
+        }
+
     }
 
 

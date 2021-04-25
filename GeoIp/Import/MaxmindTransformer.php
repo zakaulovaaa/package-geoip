@@ -157,19 +157,15 @@ class MaxmindTransformer implements DataSource {
         $fileCSV = fopen($csvFile, 'r');
         $keys = fgetcsv($fileCSV);
 
-//        for ($i = 1; $i <= min(($numPage - 1) * $step + 1, $sizeFile); $i++) {
-//            fgets($fileCSV);
-//        }
-        for ($i = 1; $i <= $left; $i++) {
+        for ($i = 1; $i < $left; $i++) {
             fgets($fileCSV);
         }
-//min($numPage * $step, $sizeFile)
-        for ($i = $left + 1; $i <= $right; $i++) {
+        for ($i = $left; $i < $right; $i++) {
             $row = fgetcsv($fileCSV);
             $rowData = array_combine($keys, $row);
-//            if ($i === $left + 1 || $i === $right - 1) {
+            if ($i === $left || $i === $right - 1) {
                 $allData[] = $rowData;
-//            }
+            }
         }
 
         return $allData;
@@ -186,17 +182,26 @@ class MaxmindTransformer implements DataSource {
 
         $info = $this->getInfoData($fileCSV);
         $left = ($numPage - 1) * $step + 1;
-        $right = min($step * $numPage, $info["size"]);
+        $right = min($step * $numPage + 1, $info["size"]);
         if ($left >= $info["size"]) {
-            return [];
+            return [
+                "info" => [
+                    "nextPage" => -1,
+                    "left" => $left,
+                    "right" => $right,
+                    "size" => $info["size"]
+                ]
+            ];
         }
         $nextPage = $numPage + 1;
 
-        if ($info["size"] <= $step * $numPage) {
+        if ($info["size"] === $right) {
             $nextPage = -1;
         }
         $data = $this->uploadPieceOfDataCSV($fileCSV, $info["size"], $left, $right);
-
+        if ($nextPage > 10) {
+            $nextPage = -1;
+        }
         return [
             "data" => $data,
             "info" => [
