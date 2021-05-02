@@ -1,5 +1,6 @@
 {
     "name": "darya/package-geoip",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "zakaulovaaa",
@@ -16,5 +17,6 @@
         "psr-4": {
             "GeoIp\\": "GeoIp/"
         }
-    }
+    },
+    "description": "package geoip"
 }
