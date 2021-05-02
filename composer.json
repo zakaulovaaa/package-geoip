@@ -9,8 +9,7 @@
     "require": {
         "guzzlehttp/guzzle": "^7.0",
       "ext-curl": "*",
-      "ext-zip": "*",
-        "ext-http": "*"
+      "ext-zip": "*"
     },
     "autoload": {
         "psr-4": {
